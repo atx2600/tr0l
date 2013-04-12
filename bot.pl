@@ -15,7 +15,7 @@ use LWP::Simple;
 use HTML::TokeParser;
 use vars qw($VERSION %IRSSI);
 
-$VERSION = '0.1';
+$VERSION = '0.1.0';
 %IRSSI = (
 	authors => 'Jeroen Van den Bossche',
 	name => 'bot',
@@ -26,31 +26,24 @@ $VERSION = '0.1';
 
 $Bot::KARMA = ( );
 %Bot::IS = ( );
+%Bot::COMMANDS = ( );
 
 sub process_message {
 	my ($server, $msg, $target, $nick) = @_;
 	my @command = 0;
-	my ($cmd, $m1, $m2, $m3) = 0;
+	my ($cmd, $m1, $m2, $m3, @arguments) = 0;
     return unless $target =~ /^#(atx2600)/;
     @command = split(' ', $msg);
-    if(@command[0] =~ /arrdem-lurkin:?/) {
+    if($command[0] =~ /tr0l:?/) {
         shift(@command);
     }
-  	$cmd = @command[0];
+  	$cmd = $command[0];
     shift(@command);
-    $m1 = @command[0];
-    $m2 = @command[1];
-    $m3 = @command[2];
+    @arguments = @command;
+    $m1 = $command[0];
+    $m2 = $command[1];
+    $m3 = $command[2];
 
-#    Irssi::print("\$target   " . $target);
-#    Irssi::print("\$nick     " . $nick);
-#    Irssi::print("\$msg      " . $msg);
-#    Irssi::print("\@command  " . @command);
-#    Irssi::print("\$command  " . $cmd);
-#    Irssi::print("\$1        " . $m1);
-#    Irssi::print("\$2        " . $m2);
-#    Irssi::print("\$3        " . $m3);
-	
     return unless $cmd;
 	return if $msg eq $cmd;
 
@@ -112,6 +105,18 @@ sub process_message {
     {
         $output = "$m1 is also known as $Bot::IS{$m1}.";
     }
+    else 
+    {
+        Irssi::print("Failed command:");
+        Irssi::print("  \$target   " . $target);
+        Irssi::print("  \$nick     " . $nick);
+        Irssi::print("  \$msg      " . $msg);
+        Irssi::print("  \@command  " . @command);
+        Irssi::print("  \$command  " . $cmd);
+        Irssi::print("  \$1        " . $m1);
+        Irssi::print("  \$2        " . $m2);
+        Irssi::print("  \$3        " . $m3);
+    }	
 
 	$server->command("msg $target $output");
 }
