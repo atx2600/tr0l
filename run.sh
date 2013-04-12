@@ -1,7 +1,5 @@
 #!/bin/bash
 
-SOCKET="/tmp/tr0l"
-
 case $1 in
 	"start" )
 		cd ~/.irssi/scripts
@@ -18,4 +16,11 @@ case $1 in
 		~/run.sh stop
 	 	~/run.sh start
 	;;
+	
+	"attatch" )
+		tmux -S $SOCKET att
+	;;
+
+	"reload" )
+		tmux -S $SOCKET send -t 0 "/SCRIPT load bot" ENTER
 esac
