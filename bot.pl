@@ -12,6 +12,8 @@ $VERSION = $tr0l::VERSION;
     url => 'http://github.com/atx2600/tr0l',
 );
 
+$tr0l::CHANNELS .= "atx2600";
+
 Irssi::signal_add_last('message public', sub {
     my ($server, $msg, $nick, $mask, $target) = @_;
     Irssi::signal_continue($server, $msg, $nick, $mask, $target);
