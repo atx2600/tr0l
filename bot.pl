@@ -12,16 +12,24 @@ $VERSION = $tr0l::VERSION;
     url => 'http://github.com/atx2600/tr0l',
 );
 
-$tr0l::CHANNELS .= "atx2600";
+BEGIN {
+    $tr0l::CHANNELS .= "atx2600";
+    Irssi::print("\$chans : " . @tr0l::CHANNELS);
+
+    Irssi::print("\$commands:");
+    while( my ($k, $v) = each %$tr0l::COMMANDS ) {
+        Irssi::print("  \$$k : $v");
+    }
+}
 
 Irssi::signal_add_last('message public', sub {
     my ($server, $msg, $nick, $mask, $target) = @_;
-    Irssi::signal_continue($server, $msg, $nick, $mask, $target);
     tr0l::respond($server, $msg, $target, $nick);
+    Irssi::signal_continue($server, $msg, $nick, $mask, $target);
 });
 
 Irssi::signal_add_last('message own_public', sub {
     my ($server, $msg, $target) = @_;
-    Irssi::signal_continue($server, $msg, $target);
     tr0l::respond($server, $msg, $target);
+    Irssi::signal_continue($server, $msg, $target);
 });
