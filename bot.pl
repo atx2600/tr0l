@@ -1,6 +1,7 @@
 use strict;
+use warnings;
+
 use Irssi;
-use vars qw($VERSION %IRSSI);
 use tr0l;
 use tr0l::core;
 use tr0l::karma;
@@ -15,18 +16,16 @@ $VERSION = $tr0l::VERSION;
     url => 'http://github.com/atx2600/tr0l',
 );
 
-BEGIN {
-    tr0l::install_module(\&tr0l::core);
-    tr0l::install_module(\&tr0l::karma);
-    tr0l::install_module(\&tr0l::alias);
+tr0l::install_module(\&tr0l::core);
+tr0l::install_module(\&tr0l::karma);
+tr0l::install_module(\&tr0l::alias);
 
-    $tr0l::CHANNELS .= "atx2600";
-    Irssi::print("\$chans : " . join(" ,", @r0l::CHANNELS));
+$tr0l::CHANNELS .= "atx2600";
+Irssi::print("\$chans : " . join(" ,", @r0l::CHANNELS));
 
-    Irssi::print("\$commands:");
-    while( my ($k, $v) = each %tr0l::HELP ) {
-        Irssi::print("  $k : $v");
-    }
+Irssi::print("\$commands:");
+while( my ($k, $v) = each %tr0l::HELP ) {
+    Irssi::print("  $k : $v");
 }
 
 Irssi::signal_add_last('message public', sub {
