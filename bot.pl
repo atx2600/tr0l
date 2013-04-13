@@ -8,8 +8,8 @@ use tr0l::core;
 use tr0l::karma;
 use tr0l::alias;
 
-$VERSION = $tr0l::VERSION;
-%IRSSI = (
+our $VERSION = $tr0l::VERSION;
+our %IRSSI = (
     authors => 'Reid McKenzie',
     name => 'tr0l',
     description => 'relatively modular Irssi bot.',
