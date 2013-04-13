@@ -1,19 +1,15 @@
 package tr0l;
 use strict;
 use warnings;
+
 use Irssi;
-use base 'Exporter';
 
-my $vfile = "~/.irssi/scripts/VERSION";
-open( FILE, '<', $vfile ) or die 'Could not open file:  ' . $!;
-our $VERSION = <FILE>;
-our @EXPORT = qw(respond install_module command_set_handler);
-
+our $VERSION = "X.Y.Z-SNAPSHOT-UNSTABLE";
 our (@CHANNELS, %COMMANDS, %HELP, $DEFAULT);
 
 sub respond {
     my ($server, $msg, $target, $nick) = @_;
-    my (@command, $cmd, $m1, $m2, $m3, @arguments, $chans, $output) = 0;
+    my (@command, $cmd, $m1, $m2, $m3, @arguments, $chans, $output);
 
     # test that message came from a joined chan
     $chans = join("|", @tr0l::CHANNELS);
