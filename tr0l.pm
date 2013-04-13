@@ -81,7 +81,7 @@ command_set_handler("!slap", "!slap <user> slaps a ho",
                         return "$args[0] got slapped around a bit with a large trout.";
                     });
 
-command_set_handler("!version", "!version prints tr0l's version number."
+command_set_handler("!version", "!version prints tr0l's version number.",
                     sub{return $VERSION;});
 
 # split out command suites
