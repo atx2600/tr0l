@@ -1,3 +1,4 @@
+package bot;
 use strict;
 use warnings;
 
