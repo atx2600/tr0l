@@ -5,14 +5,14 @@ use warnings;
 use Irssi;
 
 our $VERSION = "X.Y.Z-SNAPSHOT-UNSTABLE";
-our (@CHANNELS, %COMMANDS, %HELP, $DEFAULT);
 
 sub respond {
+    my ($self) = shift;
     my ($server, $msg, $target, $nick) = @_;
     my (@command, $cmd, $m1, $m2, $m3, @arguments, $chans, $output);
 
     # test that message came from a joined chan
-    $chans = join("|", @tr0l::CHANNELS);
+    $chans = join("|", @self->{CHANNELS});
     return unless $target =~ /^#($chans)/;
 
     @command = split(' ', $msg);
@@ -30,19 +30,32 @@ sub respond {
     return if $msg eq $cmd;
 
     # invoke handler
-    my $responder = $COMMANDS{$cmd} // $COMMANDS{$DEFAULT};
+    my $responder = $self->{COMMANDS}{$cmd}
+                    // $$self->{COMMANDS}{$self->{DEFAULT}};
     $output = $responder->($server, $target, $nick, @arguments);
 
     if($output) {
         # respond with what is assumed to be a returned string
         $server->command("msg $target $output");
+    } else {
+        Irssi::print("no reply produced...");
     }
 }
 
 sub install_module {
+    my ($self) = shift;
     my ($mod) = @_;
-    %COMMANDS = (%COMMANDS, %mod::COMMANDS);
-    %HELP     = (%HELP, %mod::HELP);
+    %self->{COMMANDS} = (%self->{COMMANDS}, %mod->{COMMANDS});
+    %self->{HELP}     = (%self->{HELP}, %mod->{HELP});
+}
+
+sub new {
+    my($class, %args) = @_;
+    my $self = bless({}, $class);
+    $self->{VERSION} = $VERSION;
+    $self->{COMMANDS};
+    $self->{HELP};
+    return $self;
 }
 
 1;

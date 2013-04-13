@@ -47,4 +47,12 @@ our (%HELP) = ("!inc" => "!inc <user> upvotes",
                "!karma" => "!karma <user> prints the user's karma count"
     );
 
+sub new {
+    my($class, %args) = @_;
+    my $self = bless({}, $class);
+    $self->{COMMANDS} = %COMMANDS;
+    $self->{HELP} = %HELP;
+    return $self;
+}
+
 1;

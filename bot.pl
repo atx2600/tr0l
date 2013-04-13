@@ -17,27 +17,28 @@ $VERSION = $tr0l::VERSION;
     url => 'http://github.com/atx2600/tr0l',
 );
 
-tr0l::install_module(\&tr0l::core);
-tr0l::install_module(\&tr0l::karma);
-tr0l::install_module(\&tr0l::alias);
+my ($troll) = tr0l->new;
+$troll->install_module(tr0l::core->new);
+$troll->install_module(tr0l::karma->new);
+$troll->install_module(tr0l::alias->new);
 
-$tr0l::CHANNELS .= "atx2600";
-Irssi::print("\$chans : " . join(" ,", @tr0l::CHANNELS));
+$troll->{CHANNELS} .= "atx2600";
+Irssi::print("\$chans : " . join(" ,", @troll->{CHANNELS}));
 
 Irssi::print("\$commands:");
-while( my ($k, $v) = each %tr0l::HELP ) {
+while( my ($k, $v) = each %troll->{HELP} ) {
     Irssi::print("  $k : $v");
 }
 
 Irssi::signal_add_last('message public', sub {
     my ($server, $msg, $nick, $mask, $target) = @_;
-    tr0l::respond($server, $msg, $target, $nick);
+    troll->respond($server, $msg, $target, $nick);
     Irssi::signal_continue($server, $msg, $nick, $mask, $target);
 });
 
 Irssi::signal_add_last('message own_public', sub {
     my ($server, $msg, $target) = @_;
-    tr0l::respond($server, $msg, $target);
+    troll->respond($server, $msg, $target);
     Irssi::signal_continue($server, $msg, $target);
 });
 

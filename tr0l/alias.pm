@@ -25,4 +25,12 @@ sub is {
 our (%HELP) = ("!alias" => "!alias <user> <name> records an alias",
                "!aliases" => "!aliases <user> prints a user's aliases");
 
+sub new {
+    my($class, %args) = @_;
+    my $self = bless({}, $class);
+    $self->{COMMANDS} = %COMMANDS;
+    $self->{HELP} = %HELP;
+    return $self;
+}
+
 1;
