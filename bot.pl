@@ -2,6 +2,9 @@ use strict;
 use Irssi;
 use vars qw($VERSION %IRSSI);
 use tr0l;
+use tr0l::core;
+use tr0l::karma;
+use tr0l::alias;
 
 $VERSION = $tr0l::VERSION;
 %IRSSI = (
@@ -13,6 +16,10 @@ $VERSION = $tr0l::VERSION;
 );
 
 BEGIN {
+    tr0l::install_module(\&tr0l::core);
+    tr0l::install_module(\&tr0l::karma);
+    tr0l::install_module(\&tr0l::alias);
+
     $tr0l::CHANNELS .= "atx2600";
     Irssi::print("\$chans : " . @tr0l::CHANNELS);
 
