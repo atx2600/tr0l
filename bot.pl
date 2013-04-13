@@ -1,6 +1,6 @@
-package bot;
 use strict;
 use warnings;
+use vars qw($VERSION %IRSSI);
 
 use Irssi;
 use tr0l;
@@ -8,8 +8,8 @@ use tr0l::core;
 use tr0l::karma;
 use tr0l::alias;
 
-our $VERSION = $tr0l::VERSION;
-our %IRSSI = (
+$VERSION = $tr0l::VERSION;
+%IRSSI = (
     authors => 'Reid McKenzie',
     name => 'tr0l',
     description => 'relatively modular Irssi bot.',
@@ -22,7 +22,7 @@ tr0l::install_module(\&tr0l::karma);
 tr0l::install_module(\&tr0l::alias);
 
 $tr0l::CHANNELS .= "atx2600";
-Irssi::print("\$chans : " . join(" ,", @r0l::CHANNELS));
+Irssi::print("\$chans : " . join(" ,", @tr0l::CHANNELS));
 
 Irssi::print("\$commands:");
 while( my ($k, $v) = each %tr0l::HELP ) {
@@ -40,3 +40,5 @@ Irssi::signal_add_last('message own_public', sub {
     tr0l::respond($server, $msg, $target);
     Irssi::signal_continue($server, $msg, $target);
 });
+
+1;
