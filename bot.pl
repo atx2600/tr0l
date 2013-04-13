@@ -21,10 +21,10 @@ BEGIN {
     tr0l::install_module(\&tr0l::alias);
 
     $tr0l::CHANNELS .= "atx2600";
-    Irssi::print("\$chans : " . join(" ," @r0l::CHANNELS));
+    Irssi::print("\$chans : " . join(" ,", @r0l::CHANNELS));
 
     Irssi::print("\$commands:");
-    while( my ($k, $v) = each %$tr0l::HELP ) {
+    while( my ($k, $v) = each %tr0l::HELP ) {
         Irssi::print("  $k : $v");
     }
 }
