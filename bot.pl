@@ -24,8 +24,8 @@ BEGIN {
     Irssi::print("\$chans : " . join(" ," @r0l::CHANNELS));
 
     Irssi::print("\$commands:");
-    while( my ($k, $v) = each %$tr0l::COMMANDS ) {
-        Irssi::print("  \$$k : $v");
+    while( my ($k, $v) = each %$tr0l::HELP ) {
+        Irssi::print("  $k : $v");
     }
 }
 
