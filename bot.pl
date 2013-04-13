@@ -1,7 +1,7 @@
 use strict;
 use Irssi;
 use vars qw($VERSION %IRSSI);
-use tr0ll;
+use tr0l;
 
 $VERSION = $tr0l::VERSION;
 %IRSSI = (
