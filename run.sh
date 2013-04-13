@@ -12,7 +12,7 @@ case $1 in
         ;;
 
     "reload" )
-        tmux -S $SOCKET send -t 0 "/SCRIPT load bot" ENTER
+        tmux -S $SOCKET send "/SCRIPT load bot" ENTER
         ;;
 
     "start" )
