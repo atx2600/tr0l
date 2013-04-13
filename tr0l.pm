@@ -4,7 +4,7 @@ use warnings;
 use Irssi;
 use base 'Exporter';
 
-my $vfile = "VERSION";
+my $vfile = "~/.irssi/scripts/VERSION";
 open( FILE, '<', $vfile ) or die 'Could not open file:  ' . $!;
 our $VERSION = <FILE>;
 our @EXPORT = qw(respond install_module command_set_handler);
