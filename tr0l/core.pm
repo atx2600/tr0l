@@ -31,4 +31,12 @@ our (%HELP) = (
     "!version" => "!version prints tr0l's version number."
     );
 
+sub new {
+    my($class, %args) = @_;
+    my $self = bless({}, $class);
+    $self->{COMMANDS} = %COMMANDS;
+    $self->{HELP} = %HELP;
+    return $self;
+}
+
 1;

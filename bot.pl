@@ -17,16 +17,19 @@ $VERSION = $tr0l::VERSION;
     url => 'http://github.com/atx2600/tr0l',
 );
 
-my ($troll) = tr0l->new;
-$troll->install_module(tr0l::core->new);
-$troll->install_module(tr0l::karma->new);
-$troll->install_module(tr0l::alias->new);
+my ($troll) = tr0l->new();
+my ($t) = tr0l::core->new();
+$troll->install_module($t);
+$t = tr0l::karma->new();
+$troll->install_module($t);
+$t = tr0l::alias->new();
+$troll->install_module($t);
 
 $troll->{CHANNELS} .= "atx2600";
-Irssi::print("\$chans : " . join(" ,", @troll->{CHANNELS}));
+Irssi::print("\$chans : " . join(" ,", $troll->{CHANNELS}));
 
 Irssi::print("\$commands:");
-while( my ($k, $v) = each %troll->{HELP} ) {
+while( my ($k, $v) = each $troll->{HELP} ) {
     Irssi::print("  $k : $v");
 }
 

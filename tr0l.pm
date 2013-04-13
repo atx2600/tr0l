@@ -12,7 +12,7 @@ sub respond {
     my (@command, $cmd, $m1, $m2, $m3, @arguments, $chans, $output);
 
     # test that message came from a joined chan
-    $chans = join("|", @self->{CHANNELS});
+    $chans = join("|", @$self->{CHANNELS});
     return unless $target =~ /^#($chans)/;
 
     @command = split(' ', $msg);
@@ -45,8 +45,8 @@ sub respond {
 sub install_module {
     my ($self) = shift;
     my ($mod) = @_;
-    %self->{COMMANDS} = (%self->{COMMANDS}, %mod->{COMMANDS});
-    %self->{HELP}     = (%self->{HELP}, %mod->{HELP});
+    $self->{COMMANDS} = ($self->{COMMANDS}, $mod->{COMMANDS});
+    $self->{HELP}     = ($self->{HELP}, $mod->{HELP});
 }
 
 sub new {
