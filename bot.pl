@@ -13,6 +13,7 @@ $VERSION = $tr0l::VERSION;
 );
 
 $tr0l::CHANNELS .= "atx2600";
+$tr0l::NICK = "tr0l";
 
 Irssi::signal_add_last('message public', sub {
     my ($server, $msg, $nick, $mask, $target) = @_;
