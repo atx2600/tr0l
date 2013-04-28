@@ -12,7 +12,8 @@ our @EXPORT = qw(respond command_set_handler);
 our (@CHANNELS,
      %COMMANDS,
      %HELP,
-     %IS);
+     %IS,
+     $NICK);
 our $DEFAULT = "_DEFAULT_";
 
 sub respond {
@@ -20,15 +21,19 @@ sub respond {
     my (@command, $cmd, $chans, $output);
 
     @command = split(' ', $msg);
+    if ($command[0] =~ m/$NICK *:?/) {
+      shift(@command);
+    }
 
     $cmd = shift(@command);
-
-    return unless $cmd;
+    if (not $cmd =~ m/^!\w+/) {
+      return "";
+    }
 
     # invoke handler
     my $responder = $COMMANDS{$cmd} // $COMMANDS{"_DEFAULT_"};
 
-    return $responder->($target, $nick, @command);
+    return $responder->($target, $nick, @command) // "";
 }
 
 sub command_set_handler {
