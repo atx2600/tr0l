@@ -12,8 +12,8 @@ command_set_handler("!help", "Prints this help message",
                     sub {
                       my ($chan, $nick, @args) = @_;
                         return "msg $chan Commands:\n  " .
-                            join(",\n  ", map("$_ : $HELP{$_}",
-                                            keys %HELP));
+                            join(",\n  ", map("$_ : $tr0l::HELP{$_}",
+                                            keys %tr0l::HELP));
                     });
 
 command_set_handler("!slap", "!slap <user> slaps a ho",
@@ -26,5 +26,5 @@ command_set_handler("!slap", "!slap <user> slaps a ho",
 command_set_handler("!version", "!version prints tr0l's version number.",
                     sub{
                       my ($chan, $nick, @args) = @_;
-                        return "msg $chan $VERSION";
+                        return "msg $chan $tr0l::VERSION";
                     });
