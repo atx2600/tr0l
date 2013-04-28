@@ -17,11 +17,11 @@ $tr0l::CHANNELS .= "atx2600";
 Irssi::signal_add_last('message public', sub {
     my ($server, $msg, $nick, $mask, $target) = @_;
     Irssi::signal_continue($server, $msg, $nick, $mask, $target);
-    tr0l::respond($server, $msg, $target, $nick);
+    $server->command(tr0l::respond($msg, $target, $nick));
 });
 
 Irssi::signal_add_last('message own_public', sub {
     my ($server, $msg, $target) = @_;
     Irssi::signal_continue($server, $msg, $target);
-    tr0l::respond($server, $msg, $target);
+    $server->command(tr0l::respond($msg, $target, $nick));
 });
