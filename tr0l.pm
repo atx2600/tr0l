@@ -18,7 +18,7 @@ our (@CHANNELS,
 our $DEFAULT = "_DEFAULT_";
 
 sub respond {
-    my ($msg, $target, $nick) = @_;
+    my ($msg, $target, $nick, $server) = @_;
     my (@command, $cmd, $chans, $output);
 
     @command = split(' ', $msg);
@@ -34,7 +34,7 @@ sub respond {
     # invoke handler
     my $responder = $COMMANDS{$cmd} // $COMMANDS{"_DEFAULT_"};
 
-    return $responder->($target, $nick, @command) // "";
+    return $responder->($target, $nick, @command, $server) // "";
 }
 
 sub command_set_handler {

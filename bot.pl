@@ -18,5 +18,5 @@ $tr0l::NICK = "tr0l";
 Irssi::signal_add_last('message public', sub {
     my ($server, $msg, $nick, $mask, $target) = @_;
     Irssi::signal_continue($server, $msg, $nick, $mask, $target);
-    $server->command(tr0l::respond($msg, $target, $nick));
+    $server->command(tr0l::respond($msg, $target, $nick, $server));
 });
