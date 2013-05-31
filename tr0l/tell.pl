@@ -23,7 +23,7 @@ command_set_handler("!mail", "!mail, get your messages in messages in PMs",
                     sub{
                         my ($chan, $nick, $server, @cmdargs) = @_;
                         my (@msgs) = @MSGS{$nick};
-                        foreach my $mgs(@msgs) {
+                        foreach my $msg(@msgs) {
                             $server->command("msg $nick $msg");
                         }
                         @MSGS{$nick} = ();
