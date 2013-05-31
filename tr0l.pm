@@ -34,7 +34,7 @@ sub respond {
     # invoke handler
     my $responder = $COMMANDS{$cmd} // $COMMANDS{"_DEFAULT_"};
 
-    return $responder->($target, $nick, @command, $server) // "";
+    return $responder->($target, $nick,  $server, @command) // "";
 }
 
 sub command_set_handler {

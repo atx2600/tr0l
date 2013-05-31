@@ -6,7 +6,7 @@ our %KARMA = ("arrdem" => 1);
 
 command_set_handler("!inc", "!inc <user> upvotes",
                     sub{
-                        my ($chan, $nick, @args) = @_;
+                        my ($chan, $nick, $server, @args) = @_;
                         if (not defined($args[0])) {
                           return "msg $chan $nick !inc requires a nick argument";
                         }
@@ -18,7 +18,7 @@ command_set_handler("!inc", "!inc <user> upvotes",
 
 command_set_handler("!dec", "!dec <user> downvotes",
                     sub {
-                        my ($chan, $nick, @args) = @_;
+                        my ($chan, $nick, $server, @args) = @_;
                         if (not defined($args[0])) {
                           return "msg $chan $nick !dec requires a nick argument";
                         }
@@ -28,7 +28,7 @@ command_set_handler("!dec", "!dec <user> downvotes",
 
 command_set_handler("!karma", "!karma <user> prints the user's karma count",
                     sub{
-                        my ($chan, $nick, @args) = @_;
+                        my ($chan, $nick, $server, @args) = @_;
                         my ($n, $output);
 
                         if (not defined($args[0])) {
