@@ -2,8 +2,7 @@ package tr0l;
 use strict;
 use warnings;
 
-our %KARMA = get_db_record("karma") // ("arrdem" => 1);
-$tr0l::DB{"karma"} = %KARMA;
+our %KARMA = ("arrdem" => 1);
 
 command_set_handler("!inc", "!inc <user> upvotes",
                     sub{
@@ -14,7 +13,6 @@ command_set_handler("!inc", "!inc <user> upvotes",
                         if ( $nick ne $args[0] ) {
                             my ($n) = 1 + ($KARMA{$args[0]} // 0);
                             $KARMA{$args[0]} = $n;
-                            dump_db();
                             return "msg $chan $args[0] -> $n";
                         }});
 
@@ -27,7 +25,6 @@ command_set_handler("!dec", "!dec <user> downvotes",
                         }
                         $n = $KARMA{$args[1]} - 1;
                         $KARMA{$args[1]} = $n;
-                        dump_db();
                         return "msg $chan $args[1] -> $n";
                     });
 
