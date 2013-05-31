@@ -3,59 +3,58 @@ use strict;
 use warnings;
 
 use Irssi;
+use File::Basename;
 
-our $VERSION = "X.Y.Z-SNAPSHOT-UNSTABLE";
+my $vfile = "VERSION";
+open( FILE, '<', $vfile ) or die 'Could not open file:  ' . $!;
+our $VERSION = <FILE>;
+our @EXPORT = qw(respond command_set_handler);
+
+our (@CHANNELS,
+     %COMMANDS,
+     %HELP,
+     %IS,
+     $NICK);
+our $DEFAULT = "_DEFAULT_";
 
 sub respond {
-    my ($self) = shift;
-    my ($server, $msg, $target, $nick) = @_;
-    my (@command, $cmd, $m1, $m2, $m3, @arguments, $chans, $output);
-
-    # test that message came from a joined chan
-    $chans = join("|", @$self->{CHANNELS});
-    return unless $target =~ /^#($chans)/;
+    my ($msg, $target, $nick) = @_;
+    my (@command, $cmd, $chans, $output);
 
     @command = split(' ', $msg);
-
-    # account for possible nick prefix
-    if($command[0] =~ /tr0l:?/) {
-        shift(@command);
+    if ($command[0] =~ m/$NICK *:?/) {
+      shift(@command);
     }
 
-    $cmd = $command[0];
-    shift(@command);
-    @arguments = @command;
-
-    return unless $cmd;
-    return if $msg eq $cmd;
+    $cmd = shift(@command);
+    if (not $cmd =~ m/^!\w+/) {
+      return "";
+    }
 
     # invoke handler
-    my $responder = $self->{COMMANDS}{$cmd}
-                    // $$self->{COMMANDS}{$self->{DEFAULT}};
-    $output = $responder->($server, $target, $nick, @arguments);
+    my $responder = $COMMANDS{$cmd} // $COMMANDS{"_DEFAULT_"};
 
-    if($output) {
-        # respond with what is assumed to be a returned string
-        $server->command("msg $target $output");
-    } else {
-        Irssi::print("no reply produced...");
-    }
+    return $responder->($target, $nick, @command) // "";
 }
 
-sub install_module {
-    my ($self) = shift;
-    my ($mod) = @_;
-    $self->{COMMANDS} = ($self->{COMMANDS}, $mod->{COMMANDS});
-    $self->{HELP}     = ($self->{HELP}, $mod->{HELP});
+sub command_set_handler {
+    my ($cmd, $doc, $handler) = @_;
+    $COMMANDS{$cmd} = $handler;
+    $HELP{$cmd} = $doc;
 }
 
-sub new {
-    my($class, %args) = @_;
-    my $self = bless({}, $class);
-    $self->{VERSION} = $VERSION;
-    $self->{COMMANDS};
-    $self->{HELP};
-    return $self;
+sub command_set_default {
+    my ($cmd, $hander) = @_;
+    $DEFAULT = $cmd;
+    $COMMANDS{$cmd} = $hander;
+}
+
+# load other commands..
+my $path = './tr0l/*\.pl';
+my @files = < $path >;
+foreach my $mod(@files){
+  my($filename, $directories, $suffix) = fileparse($mod);
+  require "./tr0l/$filename";
 }
 
 1;
