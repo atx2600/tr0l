@@ -22,9 +22,7 @@ command_set_handler("!tell", "!tell <user> [text], leave a message",
 command_set_handler("!mail", "!mail, get your messages in messages in PMs",
                     sub{
                         my ($chan, $nick, @cmdargs, $server) = @_;
-                        foreach ($MSGS{$nick}) {
-                            $server->command("msg $nick $_\n");
-                        }
+                        my ($msgs) = $MSGS{$nick};
                         $MSGS{$nick} = ();
-                        return "";
+                        return "msg $nick " . join("\n", $msgs);
                     });
