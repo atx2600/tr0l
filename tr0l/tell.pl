@@ -8,7 +8,7 @@ our %MSGS = ("arrdem" => ());
 
 command_set_handler("!tell", "!tell <user> [text], leave a message",
                     sub{
-                        my ($chan, $nick, @args) = @_;
+                        my ($chan, $nick, @args, $server) = @_;
                         my ($user) = pop(@args);
                         if (not defined($user)) {
                             return "msg $chan $nick !tell requires a nick argument";
